@@ -1,6 +1,5 @@
 import { Client } from 'discord.js'
-
-const config = require('../config.json')
+import config from '../config.json';
 
 const client: Client = new Client()
 
