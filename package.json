@@ -16,7 +16,8 @@
   "license": "MIT",
   "dependencies": {
     "discord.js": "^12.2.0",
-    "fakerator": "^0.3.1"
+    "fakerator": "^0.3.1",
+    "random-js": "^2.1.0"
   },
   "devDependencies": {
     "@types/ws": "^7.2.4",
