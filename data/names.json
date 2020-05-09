@@ -1,0 +1,100 @@
+[
+  {
+    "name": "Grisha Jaeger",
+    "required": 3500,
+    "genre": "male",
+    "age": 32,
+    "image": "https://i.imgur.com/ko5bell.png"
+  },
+  {
+    "name": "Eren Jaeger",
+    "required": 3500,
+    "genre": "male",
+    "age": 16,
+    "image": "https://i.imgur.com/MYt1omO.png"
+  },
+  {
+    "name": "Erwin Smith",
+    "required": 3000,
+    "genre": "male",
+    "age": 30,
+    "image": "https://i.imgur.com/7f8OnFo.png"
+  },
+  {
+    "name": "Mikasa Ackerman",
+    "required": 3000,
+    "genre": "female",
+    "age": 19,
+    "image": "https://i.imgur.com/EAPY59O.png"
+  },
+  {
+    "name": "Armin Arlert",
+    "required": 3000,
+    "genre": "male",
+    "age": 16,
+    "image": "https://i.imgur.com/e9OhaC0.png"
+  },
+  {
+    "name": "Levi Ackerman",
+    "required": 3000,
+    "genre": "male",
+    "age": 16,
+    "image": "https://i.imgur.com/mg7p4cA.png"
+  },
+  {
+    "name": "Hange Zoë",
+    "required": 3000,
+    "genre": "female",
+    "age": 24,
+    "image": "https://i.imgur.com/ogv8pJr.png"
+  },
+  {
+    "name": "Kenny Ackerman",
+    "required": 2500,
+    "genre": "male",
+    "age": 26,
+    "image": "https://i.imgur.com/vjpctTj.png"
+  },
+  {
+    "name": "Reiner Braun",
+    "required": 2500,
+    "genre": "male",
+    "age": 17,
+    "image": "https://i.imgur.com/WG5HUKm.png"
+  },
+  {
+    "name": "Bertolt Hoover",
+    "required": 2500,
+    "genre": "male",
+    "age": 16,
+    "image": "https://i.imgur.com/lMKtLbE.png"
+  },
+  {
+    "name": "Connie Springer",
+    "required": 2500,
+    "genre": "male",
+    "age": 16,
+    "image": "https://i.imgur.com/4imyrcL.png"
+  },
+  {
+    "name": "Sasha Blouse",
+    "required": 2000,
+    "genre": "female",
+    "age": 16,
+    "image": "https://i.imgur.com/mSfKEHw.png"
+  },
+  {
+    "name": "Jean Kirstein",
+    "required": 2000,
+    "genre": "male",
+    "age": 16,
+    "image": "https://i.imgur.com/VVaZXnk.png"
+  },
+  {
+    "name": "Petra Ral",
+    "required": 200,
+    "genre": "female",
+    "age": 17,
+    "image": "https://i.imgur.com/MOBVntE.png"
+  }
+]
