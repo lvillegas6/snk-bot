@@ -5,7 +5,7 @@ const names = require('../../data/names.json');
 const random = new Random();
 const fakerator = require("fakerator")("de-DE");
 
-class SnkNames {
+export class SnkNames {
 
   constructor() {}
 
@@ -28,6 +28,3 @@ class SnkNames {
   }
 
 }
-
-let greeter = new SnkNames();
-console.log(greeter.randomCharacter(200, 5));
