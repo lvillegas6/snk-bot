@@ -1,0 +1,26 @@
+{
+  "name": "snk-bot",
+  "version": "1.0.0",
+  "description": "bot de discord con tematica de Shingeki no Kyojin",
+  "main": "index.js",
+  "scripts": {
+    "build": "tsc ",
+    "start": "npm run build && node dist/main.js"
+  },
+  "keywords": [
+    "bot",
+    "discord",
+    "snk"
+  ],
+  "author": "Boogst <luisvillegassanchez6@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "discord.js": "^12.2.0",
+    "fakerator": "^0.3.1"
+  },
+  "devDependencies": {
+    "@types/ws": "^7.2.4",
+    "@types/node": "^13.13.5",
+    "typescript": "^3.8.3"
+  }
+}
