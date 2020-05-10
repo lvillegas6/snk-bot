@@ -1,35 +1,41 @@
+
 import { readdir } from 'fs'
 import { Client } from 'discord.js';
 
-let commands: command[] = []
+const commands: command[] = []
 export const getCommands = () => commands;
 
-export function setup(){
+export function setup() {
 
     readdir(__dirname + '/cmd/', (err, files) => {
-        if(err) {
+        if (err) {
             console.error(err);
             return;
         }
 
-        for (let i = 0; i < files.length; i++) {
-            let command = require(__dirname + "/cmd/" + files[i]).default;
+        files.forEach(element => {
+            const command = require(__dirname + '/cmd/' + element).default;
             commands.push(new command())
-        }
+        });
+
     })
 }
 
-export default class command {
-    aliases: string[];
-    tooltip: string;
-    admin: boolean;
+export default abstract class command {
 
-    constructor(){
-        this.aliases = ['']
-        this.tooltip = ''
-        this.admin = false
+    private aliases: string[];
+    private tooltip: string;
+    private admin: boolean;
+
+    constructor(alias: string[], tooltip: string, admin: boolean) {
+        this.aliases = alias || [];
+        this.tooltip = tooltip || '';
+        this.admin = admin || false;
     }
 
-    async call(client: Client, msg: any) { }
+    getAliases = () => this.aliases;
+    getTooltip = () => this.tooltip;
+    getAdmin = () => this.admin;
 
+    abstract call(client: Client, msg: any): void;
 }
