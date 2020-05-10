@@ -4,8 +4,9 @@
   "description": "bot de discord con tematica de Shingeki no Kyojin",
   "main": "index.js",
   "scripts": {
+    "dev": "nodemon -e ts --exec \"npm run build && npm start\"",
     "build": "tsc ",
-    "start": "npm run build && node dist/main.js"
+    "start": "node dist/main.js"
   },
   "keywords": [
     "bot",
@@ -20,8 +21,9 @@
     "random-js": "^2.1.0"
   },
   "devDependencies": {
-    "@types/ws": "^7.2.4",
     "@types/node": "^13.13.5",
+    "@types/ws": "^7.2.4",
+    "nodemon": "^2.0.3",
     "typescript": "^3.8.3"
   }
 }
