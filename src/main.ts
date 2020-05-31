@@ -1,13 +1,23 @@
-import { Client } from 'discord.js'
+import { Client, DiscordAPIError } from 'discord.js'
 import { setup, getCommands } from './commands'
+import { SnkDatabase } from './system/database'
+
 import config from '../config.json'
 
 const client: Client = new Client()
 const prefix = '!'
 
+export var database: SnkDatabase; // base de datos
+
 client.on('ready', () => {
     console.log('Ready');
-    setup();
+    database = new SnkDatabase(() => { // se inicializa la base de datos
+        console.log("Registering guilds...")
+        client.guilds.cache.forEach(guild => {
+            database.registerGuild(guild.id);
+        });
+        setup(); // Solo inicializar comandos luego de que el bot está en ready y la db inicializó
+    });
 })
 
 client.on('message', msg => {

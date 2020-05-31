@@ -18,9 +18,11 @@
   "dependencies": {
     "discord.js": "^12.2.0",
     "fakerator": "^0.3.1",
+    "lowdb": "^1.0.0",
     "random-js": "^2.1.0"
   },
   "devDependencies": {
+    "@types/lowdb": "^1.0.9",
     "@types/node": "^13.13.5",
     "@types/ws": "^7.2.4",
     "@typescript-eslint/eslint-plugin": "^2.31.0",
