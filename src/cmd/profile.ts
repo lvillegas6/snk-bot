@@ -1,6 +1,8 @@
-import command from '../commands'
+import { SnkPlayer } from '../system/database';
 import { Client, MessageEmbed } from 'discord.js';
-import { SnkNames } from '../util/snknames';
+
+import { database } from '../main';
+import command from '../commands'
 
 export default class Memories extends command {
 
@@ -10,19 +12,20 @@ export default class Memories extends command {
 
     call(client: Client, msg: any): void {
 
-        const memories = '`2000`'
-        const character = new SnkNames().randomCharacter(200, 5);
+        let player: SnkPlayer = database.getSoftPlayer(msg.author.id, msg.guild.id);
 
         const embed = new MessageEmbed()
             .setColor('#0099ff')
             .setTitle('Perfil')
-            .addFields(
-                { name: '⚔ Personaje', value: character['name'], inline: true },
-                { name: '📔 Recuerdos', value: memories, inline: true }
-            )
+
+        if (player.getAttribute("body") === false) {
+
+            let character = player.getCharacter();
+
+        }
 
         msg.channel.send(embed);
-        
+
     }
 
 }

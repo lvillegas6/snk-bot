@@ -118,6 +118,26 @@ export class SnkPlayer {
     return this.getAttribute('body');
   }
 
+  public getCharacter(): any {
+    return this.getAttribute("character");
+  }
+
+  public getMemories(): number {
+    return this.getAttribute("memories");
+  }
+
+  public addMemories(memories: number) {
+    this.setMemories(this.getMemories() + memories);
+  }
+
+  public removeMemories(memories: number) {
+    this.setMemories(this.getMemories() - memories);
+  }
+
+  public setMemories(memories: number) {
+    this.setAttribute("memories", memories);
+  }
+
   public async setAttribute(attribute: string, value: any) {
     await this.getLowdb().set(this.getPlayerKey() + '.' + attribute, value).write();
   }

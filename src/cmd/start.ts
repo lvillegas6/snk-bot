@@ -15,8 +15,6 @@ export default class Start extends command {
 
         let player: SnkPlayer = database.getSoftPlayer(msg.author.id, msg.guild.id);
 
-        console.log(player.getAttribute('body'))
-
         if (player.getAttribute("body") === false) {
 
             const character = new SnkNames().randomCharacter(200, 5);
@@ -43,8 +41,6 @@ export default class Start extends command {
             .setTimestamp();
 
         msg.channel.send(embed);
-
-
 
     }
 }
