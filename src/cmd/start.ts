@@ -13,14 +13,14 @@ export default class Start extends command {
 
     async call(client: Client, msg: any) {
 
-        let player: SnkPlayer = database.getSoftPlayer(msg.author.id, msg.guild.id);
+        const player: SnkPlayer = database.getSoftPlayer(msg.author.id, msg.guild.id);
 
-        if (player.getAttribute("body") === false) {
+        if (player.getAttribute('body') === false) {
 
             const character = new SnkNames().randomCharacter(200, 5);
 
-            player.setAttribute("body", true);
-            player.setAttribute("character", character);
+            player.setAttribute('body', true);
+            player.setAttribute('character', character);
 
             const embed = new MessageEmbed()
                 .setColor('#34eb64')

@@ -7,12 +7,12 @@ import config from '../config.json'
 const client: Client = new Client()
 const prefix = '!'
 
-export var database: SnkDatabase; // base de datos
+export let database: SnkDatabase; // base de datos
 
 client.on('ready', () => {
     console.log('Ready');
     database = new SnkDatabase(() => { // se inicializa la base de datos
-        console.log("Registering guilds...")
+        console.log('Registering guilds...')
         client.guilds.cache.forEach(guild => {
             database.registerGuild(guild.id);
         });

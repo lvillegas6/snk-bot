@@ -12,15 +12,15 @@ export default class Memories extends command {
 
     call(client: Client, msg: any): void {
 
-        let player: SnkPlayer = database.getSoftPlayer(msg.author.id, msg.guild.id);
+        const player: SnkPlayer = database.getSoftPlayer(msg.author.id, msg.guild.id);
 
         const embed = new MessageEmbed()
             .setColor('#0099ff')
             .setTitle('Perfil')
 
-        if (player.getAttribute("body") === false) {
+        if (player.getAttribute('body') === false) {
 
-            let character = player.getCharacter();
+            const character = player.getCharacter();
 
         }
 
