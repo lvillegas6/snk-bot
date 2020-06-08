@@ -44,13 +44,13 @@ export class SnkDatabase {
     this.initDatabase(callback);
   }
 
-  private async initDatabase(callback: any) {
+  private async initDatabase(callback: any) {//define la base de datos para poder leerla y escribirla.
     const adapter = new FileAsync("./data/data.json");
     this.db = await lowdb(adapter);
     await callback();
   }
 
-  private async mapAndSet(key: string, obj: Object): Promise<any> {
+  private async mapAndSet(key: string, obj: Object): Promise<any> {//Guarda los jugadores en la db
     for (let objkey in obj)
       await this.db.set(key + "." + objkey, Object(obj)[objkey]).write();
   }
@@ -60,12 +60,12 @@ export class SnkDatabase {
       this.mapAndSet("guilds." + guildid, guildOptions);
   }
 
-  public async registerPlayer(userid: string, guildid: string) {
+  public async registerPlayer(userid: string, guildid: string) {//Si el usuario no esta en la bd, lo guarda
     if (!this.db.has('guilds.' + guildid + '.players.' + userid).value())
       this.mapAndSet('guilds.' + guildid + '.players.' + userid, playerOptions);
   }
 
-  public getSoftPlayer(userid: string, guildid: string) {
+  public getSoftPlayer(userid: string, guildid: string) {//Registra al usuario si aun no juega, y retorna un objeto
     this.registerPlayer(userid, guildid);
     return this.getPlayerManager(guildid).getPlayer(userid);
   }
@@ -74,7 +74,7 @@ export class SnkDatabase {
     return new SnkPlayerManager(guildid, this);
   }
 
-  public getLowdb(): lowdb.LowdbAsync<any> {
+  public getLowdb(): lowdb.LowdbAsync<any> {//retorna la bd
     return this.db;
   }
 
