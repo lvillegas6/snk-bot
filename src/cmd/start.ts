@@ -13,16 +13,24 @@ export default class Start extends command {
 
     async call(client: Client, msg: any) {
 
+<<<<<<< HEAD
         const player: SnkPlayer = database.getSoftPlayer(msg.author.id, msg.guild.id);
 
         if (player.getAttribute('body') === false) {
 
             const character = new SnkNames().randomCharacter(200, 5);
+=======
+        let player: SnkPlayer = database.getSoftPlayer(msg.author.id, msg.guild.id);//Ve si existe el jugador, sino lo crea
+        let embed;
+        if (player.getAttribute("body") === false) {//Si el jugador no tiene un cuerpo se lo crea
+
+            const character = new SnkNames().randomCharacter(200, 5);//Elije un personaje
+>>>>>>> master
 
             player.setAttribute('body', true);
             player.setAttribute('character', character);
 
-            const embed = new MessageEmbed()
+             embed = new MessageEmbed()//Mensaje con el nuevo personaje
                 .setColor('#34eb64')
                 .setTitle('¡Has nacido!')
                 .setDescription('Tu nombre a partir de ahora será **' + character['name'] + '**.')
@@ -34,11 +42,12 @@ export default class Start extends command {
             return;
 
         }
-
-        const embed = new MessageEmbed()
-            .setColor('#ed1f22')
-            .setTitle('¡Ya posees un personaje!')
-            .setTimestamp();
+        else if(player.getAttribute("body") === true){
+             embed = new MessageEmbed()
+                .setColor('#ed1f22')
+                .setTitle('¡Ya posees un personaje!')
+                .setTimestamp();
+        }
 
         msg.channel.send(embed);
 
