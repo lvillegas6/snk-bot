@@ -1,6 +1,7 @@
 import command from '../commands'
 import { Client, MessageEmbed } from 'discord.js';
-import { SnkNames } from '../util/snknames';
+import { SnkPlayer } from '../system/database';
+import { database } from '../main';
 
 export default class Memories extends command {
 
@@ -10,12 +11,28 @@ export default class Memories extends command {
 
     call(client: Client, msg: any): void {
 
-        const memories = '`2000`'
-        const character = new SnkNames().randomCharacter(200, 5);
-        const embed = new MessageEmbed()
-            .setColor('#0099ff')
-            .setTitle('Recuerdos')
-            .addFields({ name: '📔 Recuerdos', value: memories, inline: true })
+        let embed: MessageEmbed
+        const player: SnkPlayer = database.getSoftPlayer(msg.author.id, msg.guild.id);
+
+        if (player.getAttribute('titanmemories') === -1) {
+
+            embed = new MessageEmbed()
+                .setColor('#0099ff')
+                .setAuthor(msg.author.username, msg.author.avatarURL())
+                .setDescription('A continuación se mostrará todos tus recuerdos: ')
+                .addField('📔 Recuerdos del Alma', player.getAttribute('memories'), true)
+
+        } else {
+            embed = new MessageEmbed()
+                .setColor('#0099ff')
+                .setAuthor(msg.author.username, msg.author.avatarURL())
+                .setDescription('A continuación se mostrará todos tus recuerdos: ')
+                .addFields(
+                    { name: '📔 Recuerdos del Alma', value: player.getAttribute('memories'), inline: true },
+                    { name: '📚 Recuerdos Titánicos', value: player.getAttribute('titanmemories'), inline: true },
+                )
+
+        }
 
         msg.channel.send(embed);
     }
