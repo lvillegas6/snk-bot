@@ -28,7 +28,7 @@ export default class Health extends command {
       .setColor('#f75e2f')
       .setAuthor(msg.author.username, msg.author.avatarURL())
       .setTitle('Tu Salud')
-      .setDescription('Actualmente posees una salud de `" + player.getHealth() + "`.')
+      .setDescription(`Actualmente posees una salud de \`${player.getHealth()}\`.`)
       .setTimestamp();
 
     msg.channel.send(embed);

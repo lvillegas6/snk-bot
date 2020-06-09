@@ -28,7 +28,7 @@ export default class Energy extends command {
       .setColor('#19fa68')
       .setAuthor(msg.author.username, msg.author.avatarURL())
       .setTitle('Tu Energía')
-      .setDescription('Actualmente posees una energía de `" + player.getEnergy() + "`.')
+      .setDescription(`Actualmente posees una energía de \`${player.getEnergy()}\`.`)
       .setTimestamp();
 
     msg.channel.send(embed);
