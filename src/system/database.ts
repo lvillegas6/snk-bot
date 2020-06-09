@@ -1,5 +1,6 @@
-import lowdb from 'lowdb';
 import { default as FileAsync } from 'lowdb/adapters/FileAsync';
+
+import lowdb from 'lowdb';
 
 const playerOptions = Object({
     memories: 0,
@@ -51,20 +52,27 @@ export class SnkDatabase {
   }
 
   private async mapAndSet(key: string, obj: Object): Promise<any> {//Guarda los jugadores en la db
-      for (const objkey in obj) {await this.db.set(key + '.' + objkey, Object(obj)[objkey]).write();}
+      for (const objkey in obj) { await this.db.set(key + '.' + objkey, Object(obj)[objkey]).write(); }
   }
 
   public async registerGuild(guildid: string): Promise<any> {
-      if (!this.db.has('guilds.' + guildid).value()) {this.mapAndSet('guilds.' + guildid, guildOptions);}
+      if (!this.db.has('guilds.' + guildid).value()) { this.mapAndSet('guilds.' + guildid, guildOptions); }
   }
 
   public async registerPlayer(userid: string, guildid: string) {//Si el usuario no esta en la bd, lo guarda
-      if (!this.db.has('guilds.' + guildid + '.players.' + userid).value()) {this.mapAndSet('guilds.' + guildid + '.players.' + userid, playerOptions);}
+      if (!this.db.has('guilds.' + guildid + '.players.' + userid).value()) { this.mapAndSet('guilds.' + guildid + '.players.' + userid, playerOptions); }
   }
 
   public getSoftPlayer(userid: string, guildid: string) {//Registra al usuario si aun no juega, y retorna un objeto
       this.registerPlayer(userid, guildid);
       return this.getPlayerManager(guildid).getPlayer(userid);
+  }
+
+  public getPlayerManagers(): SnkPlayerManager[] {
+      const array: SnkPlayerManager[] = [];
+      const guilds = this.getLowdb().get('guilds').value();
+      for (const key in guilds) {array.push(this.getPlayerManager(key));}
+      return array;
   }
 
   public getPlayerManager(guildid: string): SnkPlayerManager {
@@ -85,6 +93,13 @@ export class SnkPlayerManager {
   constructor(guildid: string, database: SnkDatabase) {
       this.database = database;
       this.guildid = guildid;
+  }
+
+  public getPlayers(): SnkPlayer[] { // Devuelve todos los jugadores de esta guild
+      const array: SnkPlayer[] = [];
+      const players = this.get().getLowdb().get('guilds.' + this.guildid + '.players').value();
+      for (const key in players) {array.push(this.getPlayer(key));}
+      return array;
   }
 
   public getPlayer(userid: string): SnkPlayer {
@@ -133,6 +148,38 @@ export class SnkPlayer {
 
   public setMemories(memories: number) {
       this.setAttribute('memories', memories);
+  }
+
+  public getEnergy(): number {
+      return this.getAttribute('energy');
+  }
+
+  public addEnergy(energy: number) {
+      this.setEnergy(this.getEnergy() + energy);
+  }
+
+  public removeEnergy(energy: number) {
+      this.setEnergy(this.getEnergy() - energy);
+  }
+
+  public setEnergy(energy: number) {
+      this.setAttribute('energy', energy);
+  }
+
+  public getHealth(): number {
+      return this.getAttribute('health');
+  }
+
+  public addHealth(health: number) {
+      this.setHealth(this.getHealth() + health);
+  }
+
+  public removeHealth(health: number) {
+      this.setHealth(this.getHealth() - health);
+  }
+
+  public setHealth(health: number) {
+      this.setAttribute('health', health);
   }
 
   public async setAttribute(attribute: string, value: any) {

@@ -2,6 +2,7 @@ import { SnkPlayer } from '../system/database';
 import { Client, MessageEmbed } from 'discord.js';
 
 import { database } from '../main';
+
 import command from '../commands'
 
 export default class Memories extends command {

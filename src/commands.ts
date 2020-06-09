@@ -5,19 +5,16 @@ import { Client } from 'discord.js';
 const commands: command[] = []
 export const getCommands = () => commands;
 
-export function setup() {
-
+export function setupCommands() {
     readdir(__dirname + '/cmd/', (err, files) => {
         if (err) {
             console.error(err);
             return;
         }
-
         files.forEach(element => {
             const command = require(__dirname + '/cmd/' + element).default;
             commands.push(new command())
         });
-
     })
 }
 
@@ -38,4 +35,5 @@ export default abstract class command {
     getAdmin = () => this.admin;
 
     abstract call(client: Client, msg: any): void;
+
 }
