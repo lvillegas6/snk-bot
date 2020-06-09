@@ -1,5 +1,6 @@
-import lowdb from 'lowdb';
 import { default as FileAsync } from 'lowdb/adapters/FileAsync';
+
+import lowdb from 'lowdb';
 
 const playerOptions = Object({
   memories: 0,

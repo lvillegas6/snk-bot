@@ -3,6 +3,7 @@ import { SnkDefaults } from '../system/defaults';
 import { Client, MessageEmbed } from 'discord.js';
 
 import { database } from '../main';
+
 import command from '../commands';
 
 export default class Health extends command {
@@ -27,7 +28,7 @@ export default class Health extends command {
       .setColor('#f75e2f')
       .setAuthor(msg.author.username, msg.author.avatarURL())
       .setTitle('Tu Salud')
-      .setDescription("Actualmente posees una salud de `" + player.getHealth() + "`.")
+      .setDescription('Actualmente posees una salud de `" + player.getHealth() + "`.')
       .setTimestamp();
 
     msg.channel.send(embed);

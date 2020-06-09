@@ -3,6 +3,7 @@ import { SnkDefaults } from '../system/defaults';
 import { Client, MessageEmbed } from 'discord.js';
 
 import { database } from '../main';
+
 import command from '../commands';
 
 export default class Suicide extends command {
