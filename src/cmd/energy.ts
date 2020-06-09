@@ -31,7 +31,6 @@ export default class Energy extends command {
       .setTimestamp();
 
     msg.channel.send(embed);
-    return;
 
   }
 
