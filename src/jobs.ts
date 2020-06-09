@@ -5,18 +5,18 @@ const jobs: SnkJob[] = []
 export const getJobs = () => jobs;
 
 export function setupJobs() {
-    readdir(__dirname + '/jobs/', (err, files) => {
-        if (err) {
-            console.error(err);
-            return;
-        }
-        files.forEach(element => {
-            const snkJob = require(__dirname + '/jobs/' + element).default;
-            const instance = new snkJob();
-            instance.start();
-            jobs.push(instance)
-        });
-    })
+  readdir(__dirname + '/jobs/', (err, files) => {
+    if (err) {
+      console.error(err);
+      return;
+    }
+    files.forEach(element => {
+      const snkJob = require(__dirname + '/jobs/' + element).default;
+      const instance = new snkJob();
+      instance.start();
+      jobs.push(instance)
+    });
+  })
 }
 
 export default abstract class SnkJob {
@@ -27,15 +27,15 @@ export default abstract class SnkJob {
   private interval: any; // Instancia del job
 
   constructor(period: number) {
-      this.period = period;
+    this.period = period;
   }
 
   start() {
-      this.interval = setInterval(this.run, 1000 * this.period);
+    this.interval = setInterval(this.run, 1000 * this.period);
   }
 
   cancel() {
-      clearInterval(this.interval);
+    clearInterval(this.interval);
   }
 
   getPeriod = () => this.period;

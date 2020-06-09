@@ -6,16 +6,16 @@ const commands: command[] = []
 export const getCommands = () => commands;
 
 export function setupCommands() {
-    readdir(__dirname + '/cmd/', (err, files) => {
-        if (err) {
-            console.error(err);
-            return;
-        }
-        files.forEach(element => {
-            const command = require(__dirname + '/cmd/' + element).default;
-            commands.push(new command())
-        });
-    })
+  readdir(__dirname + '/cmd/', (err, files) => {
+    if (err) {
+      console.error(err);
+      return;
+    }
+    files.forEach(element => {
+      const command = require(__dirname + '/cmd/' + element).default;
+      commands.push(new command())
+    });
+  })
 }
 
 export default abstract class command {
@@ -25,9 +25,9 @@ export default abstract class command {
     private admin: boolean;
 
     constructor(alias: string[], tooltip: string, admin: boolean) {
-        this.aliases = alias || [];
-        this.tooltip = tooltip || '';
-        this.admin = admin || false;
+      this.aliases = alias || [];
+      this.tooltip = tooltip || '';
+      this.admin = admin || false;
     }
 
     getAliases = () => this.aliases;

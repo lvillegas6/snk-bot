@@ -7,26 +7,26 @@ import command from '../commands'
 
 export default class Memories extends command {
 
-    constructor() {
-        super(['profile'], '', false)
-    }
+  constructor() {
+    super(['profile'], '', false)
+  }
 
-    call(client: Client, msg: any): void {
+  call(client: Client, msg: any): void {
 
-        const player: SnkPlayer = database.getSoftPlayer(msg.author.id, msg.guild.id);
+    const player: SnkPlayer = database.getSoftPlayer(msg.author.id, msg.guild.id);
 
-        const embed = new MessageEmbed()
-            .setColor('#0099ff')
-            .setTitle('Perfil')
+    const embed = new MessageEmbed()
+      .setColor('#0099ff')
+      .setTitle('Perfil')
 
-        if (player.getAttribute('body') === false) {
+    if (player.getAttribute('body') === false) {
 
-            const character = player.getCharacter();
-
-        }
-
-        msg.channel.send(embed);
+      const character = player.getCharacter();
 
     }
+
+    msg.channel.send(embed);
+
+  }
 
 }
