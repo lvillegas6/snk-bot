@@ -8,24 +8,24 @@ import command from '../commands';
 
 export default class Suicide extends command {
 
-  constructor() {
-    super(['suicide'], '', false)
-  }
-
-  call(client: Client, msg: any): void {
-
-    let player: SnkPlayer = database.getSoftPlayer(msg.author.id, msg.guild.id);
-
-    if (!player.hasBody()) {
-
-      database.getPlayerManager(msg.guild.id).getPlayers();
-      SnkDefaults.sendNotSoulMessage(msg);
-      return;
-
+    constructor() {
+        super(['suicide'], '', false)
     }
 
-    const character = player.getCharacter();
+    call(client: Client, msg: any): void {
 
-  }
+        const player: SnkPlayer = database.getSoftPlayer(msg.author.id, msg.guild.id);
+
+        if (!player.hasBody()) {
+
+            database.getPlayerManager(msg.guild.id).getPlayers();
+            SnkDefaults.sendNotSoulMessage(msg);
+            return;
+
+        }
+
+        const character = player.getCharacter();
+
+    }
 
 }
