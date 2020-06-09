@@ -1,7 +1,6 @@
 import { SnkPlayer } from '../system/database';
 import { SnkDefaults } from '../system/defaults';
 import { Client, MessageEmbed } from 'discord.js';
-import { SnkNames } from '../util/snknames';
 
 import { database } from '../main';
 import command from '../commands';
@@ -25,7 +24,6 @@ export default class Suicide extends command {
     }
 
     const character = player.getCharacter();
-    return;
 
   }
 
