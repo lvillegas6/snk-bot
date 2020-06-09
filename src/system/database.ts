@@ -151,6 +151,38 @@ export class SnkPlayer {
     this.setAttribute('memories', memories);
   }
 
+  public getEnergy(): number {
+    return this.getAttribute('energy');
+  }
+
+  public addEnergy(energy: number) {
+    this.setEnergy(this.getEnergy() + energy);
+  }
+
+  public removeEnergy(energy: number) {
+    this.setEnergy(this.getEnergy() - energy);
+  }
+
+  public setEnergy(energy: number) {
+    this.setAttribute('energy', energy);
+  }
+
+  public getHealth(): number {
+    return this.getAttribute('health');
+  }
+
+  public addHealth(health: number) {
+    this.setHealth(this.getHealth() + health);
+  }
+
+  public removeHealth(health: number) {
+    this.setHealth(this.getHealth() - health);
+  }
+
+  public setHealth(health: number) {
+    this.setAttribute('health', health);
+  }
+
   public async setAttribute(attribute: string, value: any) {
     await this.getLowdb().set(this.getPlayerKey() + '.' + attribute, value).write();
   }
