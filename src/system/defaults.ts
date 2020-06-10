@@ -2,12 +2,40 @@ import { Client, MessageEmbed } from 'discord.js';
 
 export default class BotDefaults {
 
-  public sendNotSoulMessage(msg: any) {
+  public killPlayer(player: any, user: any, guild: any, cause: string, channel: any) {
+    console.log(player)
+    if (player.hasBody()) {
+      this.sendDeathMessage(player, user, guild, cause, channel);
+      player.kill();
+    }
+  }
+
+  public sendDeathMessage(player: any, user: any, guild: any, cause: string, channel: any) {
+    console.log(player.getAttribute('body'))
+    const embed = new MessageEmbed()
+      .setTitle('⚰ ¡Ha muerto un jugador!')
+      .setDescription([
+        `**${player.getCharacter()['name']}** (\`${user.tag}\`)\n`,
+        '',
+        `📜 **Causa:** ${cause}`,
+        `⌛ **Edad:** ${player.getCharacter()['age']}`,
+        '',
+        player.getCharacter()['official'] ? '🔹 ¡Personaje **OFICIAL** liberado!' : ''
+      ])
+      .setTimestamp()
+      .setFooter(`Puedes utilizar ${guild.getPrefix()}start para reencarnar en otro personaje`)
+      .setThumbnail('https://i.imgur.com/ALmIA2E.png')
+    channel.send(embed);
+  }
+
+  public sendNotSoulMessage(msg: any, mentions?: any) {
     msg.channel.send(new MessageEmbed()
       .setColor('#d8ecf2')
       .setAuthor(msg.author.username, msg.author.avatarURL())
-      .setTitle('¡Eres un alma sin cuerpo!')
-      .setDescription('No puedes utilizar este comando porque actualmente eres un alma, debes reencarnar primero, para ello utiliza el comando `!start`.')
+      .setTitle(`¡${mentions ? `${mentions.username} es un` : 'Eres un'} alma sin cuerpo!`)
+      .setDescription(mentions ?
+        'Actualmente es un alma, debe reencarnar primero.' :
+        'No puedes utilizar este comando porque actualmente eres un alma, debes reencarnar primero, para ello utiliza el comando `!start`.')
       .setTimestamp());
   }
 

@@ -12,12 +12,13 @@ export default class Memories extends command {
 
   call(client: Client, msg: any): void {
 
-    const user = msg.mentions.users.first();
-    const player: SnkPlayer = database.getSoftPlayer(user ? user.id : msg.author.id, msg.guild.id);
+    const mention = msg.mentions.users.first();
+    const player: SnkPlayer = database.getSoftPlayer(mention ? mention.id : msg.author.id, msg.guild.id);
+
     if (!player.hasBody()) {
 
       database.getPlayerManager(msg.guild.id).getPlayers()
-      SnkDefaults.sendNotSoulMessage(msg)
+      SnkDefaults.sendNotSoulMessage(msg, mention)
       return;
 
     }
@@ -26,7 +27,7 @@ export default class Memories extends command {
 
     if (age < 12) {
 
-      SnkDefaults.sendInsufficientAge(msg, age, user)
+      SnkDefaults.sendInsufficientAge(msg, age, mention)
       return
 
     }
@@ -37,7 +38,7 @@ export default class Memories extends command {
     const embed = new MessageEmbed()
       .setAuthor(msg.author.username, msg.author.avatarURL())
       .setColor('#0099ff')
-      .setTitle(user ? `Perfil de ${user.username}` : 'Tu Perfil')
+      .setTitle(mention ? `Perfil de ${mention.username}` : 'Tu Perfil')
       .setDescription([
         `${character.name} \n`,
         '',

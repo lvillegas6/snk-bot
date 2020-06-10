@@ -18,7 +18,6 @@ export default class Energy extends command {
 
     if (!player.hasBody()) {
 
-      database.getPlayerManager(msg.guild.id).getPlayers();
       SnkDefaults.sendNotSoulMessage(msg);
       return;
 

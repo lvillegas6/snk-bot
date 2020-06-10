@@ -13,28 +13,37 @@ export default class Start extends command {
 
   async call(client: Client, msg: any) {
 
-    let embed;
-    const player: SnkPlayer = database.getSoftPlayer(msg.author.id, msg.guild.id);//Ve si existe el jugador, sino lo crea
-    if (player.getAttribute('body') === false) {//Si el jugador no tiene un cuerpo se lo crea
+    let embed = new MessageEmbed()
+      .setAuthor(msg.author.username, msg.author.avatarURL())
+      .setTimestamp();
 
-      const character = new SnkNames().randomCharacter(200, 5);//Elije un personaje
+    const player: SnkPlayer = database.getSoftPlayer(msg.author.id, msg.guild.id); // Ve si existe el jugador, sino lo crea
+
+    if (!player.hasBody()) { // Si el jugador no tiene un cuerpo se lo crea
+
+      const character = new SnkNames().randomCharacter(200, 5); // Elije un personaje
+      const deathdate = new Date().getTime() + (1000 * 60 * 60 * 12 * (character['age'] - 12));
 
       player.setAttribute('body', true);
       player.setAttribute('character', character);
+      player.setAttribute('borndate', new Date().getTime())
+      player.setAttribute('deathdate', deathdate);
 
-      embed = new MessageEmbed()//Mensaje con el nuevo personaje
+      embed = new MessageEmbed() // Mensaje con el nuevo personaje
+        .setAuthor(msg.author.username, msg.author.avatarURL())
         .setColor('#34eb64')
         .setTitle('¡Has nacido!')
         .setDescription('Tu nombre a partir de ahora será **' + character['name'] + '**.')
         .setThumbnail(character['image'])
-        .setTimestamp()
         .setFooter('Crecerás en 10 minutos', character['image']);
 
-    } else if (player.getAttribute('body') === true) {
+    } else {
+
       embed = new MessageEmbed()
         .setColor('#ed1f22')
         .setTitle('¡Ya posees un personaje!')
-        .setTimestamp();
+        .setDescription('Ya has reencarnado en un personaje, puedes utilizar `!profile` para ver a tu personaje actual.');
+
     }
 
     msg.channel.send(embed);

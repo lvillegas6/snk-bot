@@ -1,4 +1,5 @@
 import { default as FileAsync } from 'lowdb/adapters/FileAsync';
+import { Client, Guild } from 'discord.js';
 
 import lowdb from 'lowdb';
 
@@ -13,6 +14,7 @@ const playerOptions = Object({
   king: false,
   money: 0,
   age: 1,
+  borndate: 0,
   deathdate: 0,
   health: 0,
   energy: 0,
@@ -31,6 +33,8 @@ const playerOptions = Object({
 
 const guildOptions = Object({
   version: 'v1.0',
+  channel: 'none',
+  prefix: '!',
   admins: {},
   players: {},
   missions: {},
@@ -40,18 +44,20 @@ const guildOptions = Object({
 export class SnkDatabase {
 
   private db: lowdb.LowdbAsync<any>;
+  private client: Client;
 
-  constructor(callback: any) {
+  constructor(callback: any, client: Client) {
     this.initDatabase(callback);
+    this.client = client;
   }
 
-  private async initDatabase(callback: any) {//define la base de datos para poder leerla y escribirla.
+  private async initDatabase(callback: any) { // Define la base de datos para poder leerla y escribirla.
     const adapter = new FileAsync('./data/data.json');
     this.db = await lowdb(adapter);
     await callback();
   }
 
-  private async mapAndSet(key: string, obj: Object): Promise<any> {//Guarda los jugadores en la db
+  private async mapAndSet(key: string, obj: Object): Promise<any> { // Guarda los jugadores en la db
     for (const objkey in obj) { await this.db.set(key + '.' + objkey, Object(obj)[objkey]).write(); }
   }
 
@@ -59,11 +65,24 @@ export class SnkDatabase {
     if (!this.db.has('guilds.' + guildid).value()) { this.mapAndSet('guilds.' + guildid, guildOptions); }
   }
 
-  public async registerPlayer(userid: string, guildid: string) {//Si el usuario no esta en la bd, lo guarda
+  public async registerPlayer(userid: string, guildid: string) { // Si el usuario no esta en la bd, lo guarda
     if (!this.db.has('guilds.' + guildid + '.players.' + userid).value()) { this.mapAndSet('guilds.' + guildid + '.players.' + userid, playerOptions); }
   }
 
-  public getSoftPlayer(userid: string, guildid: string) {//Registra al usuario si aun no juega, y retorna un objeto
+  public getSoftGuild(guildid: string): SnkGuild {
+
+    this.registerGuild(guildid);
+
+    const path = 'guilds.' + guildid;
+
+    const prefix = this.db.get(path + '.prefix').value();
+    const channel = this.db.get(path + '.channel').value();
+
+    return new SnkGuild(guildid, prefix, channel, this);
+
+  }
+
+  public getSoftPlayer(userid: string, guildid: string) { // Registra al usuario si aun no juega, y retorna un objeto
     this.registerPlayer(userid, guildid);
     return this.getPlayerManager(guildid).getPlayer(userid);
   }
@@ -71,7 +90,7 @@ export class SnkDatabase {
   public getPlayerManagers(): SnkPlayerManager[] {
     const array: SnkPlayerManager[] = [];
     const guilds = this.getLowdb().get('guilds').value();
-    for (const key in guilds) {array.push(this.getPlayerManager(key));}
+    for (const key in guilds) { array.push(this.getPlayerManager(key)); }
     return array;
   }
 
@@ -81,6 +100,55 @@ export class SnkDatabase {
 
   public getLowdb(): lowdb.LowdbAsync<any> {//retorna la bd
     return this.db;
+  }
+
+  public getClient(): Client {
+    return this.client;
+  }
+
+}
+
+export class SnkGuild {
+
+  private prefix: string;
+  private channel: string;
+
+  private guildid: string;
+  private database: SnkDatabase;
+
+  constructor(guildid: string, prefix: string, channel: string, database: SnkDatabase) {
+    this.prefix = prefix;
+    this.channel = channel;
+    this.guildid = guildid;
+    this.database = database;
+  }
+
+  public getGuild(): any {
+    return this.database.getClient().guilds.cache.get(this.guildid);
+  }
+
+  public getUser(userid: string): any {
+    return this.database.getClient().users.cache.get(userid);
+  }
+
+  public getCommandChannel(callback: any) {
+    callback(this.getGuild().channels.cache.get(this.channel));
+  }
+
+  public getPlayer(userid: string): SnkPlayer {
+    return this.database.getPlayerManager(this.guildid).getPlayer(userid);
+  }
+
+  public getPrefix(): string {
+    return this.prefix;
+  }
+
+  public getChannelid(): string {
+    return this.channel;
+  }
+
+  public getGuildid(): string {
+    return this.guildid;
   }
 
 }
@@ -98,7 +166,7 @@ export class SnkPlayerManager {
   public getPlayers(): SnkPlayer[] { // Devuelve todos los jugadores de esta guild
     const array: SnkPlayer[] = [];
     const players = this.get().getLowdb().get('guilds.' + this.guildid + '.players').value();
-    for (const key in players) {array.push(this.getPlayer(key));}
+    for (const key in players) { array.push(this.getPlayer(key)); }
     return array;
   }
 
@@ -124,6 +192,22 @@ export class SnkPlayer {
   constructor(userid: string, playerManager: SnkPlayerManager) {
     this.userid = userid;
     this.playerManager = playerManager;
+  }
+
+  public kill() {
+    this.setEnergy(0);
+    this.setHealth(0);
+    this.setAttribute('character', null);
+    this.setAttribute('body', false);
+    this.setAttribute('deathdate', new Date().getTime() + 1000 * 1000);
+  }
+
+  public getDiscordUser(guild: SnkGuild) {
+    return guild.getUser(this.userid);
+  }
+
+  public getUserid() {
+    return this.userid;
   }
 
   public hasBody() {

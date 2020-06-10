@@ -18,13 +18,12 @@ export default class Suicide extends command {
 
     if (!player.hasBody()) {
 
-      database.getPlayerManager(msg.guild.id).getPlayers();
       SnkDefaults.sendNotSoulMessage(msg);
       return;
 
     }
 
-    const character = player.getCharacter();
+    SnkDefaults.killPlayer(player, msg.author, database.getSoftGuild(msg.guild.id), 'Suicidio', msg.channel);
 
   }
 
