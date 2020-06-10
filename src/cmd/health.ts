@@ -18,7 +18,6 @@ export default class Health extends command {
 
     if (!player.hasBody()) {
 
-      database.getPlayerManager(msg.guild.id).getPlayers();
       SnkDefaults.sendNotSoulMessage(msg);
       return;
 
