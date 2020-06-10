@@ -12,7 +12,7 @@ const playerOptions = Object({
   inventory: {},
   king: false,
   money: 0,
-  age: 0,
+  age: 1,
   deathdate: 0,
   health: 0,
   energy: 0,
@@ -188,6 +188,10 @@ export class SnkPlayer {
 
   public getAttribute(attribute: string): any {
     return this.getLowdb().get(this.getPlayerKey() + '.' + attribute).value();
+  }
+
+  public getAttributes(attributes: Array<string>): any {
+    return attributes.map((attribute: string) => this.getLowdb().get(this.getPlayerKey() + '.' + attribute).value())
   }
 
   public getPlayerKey(): string {

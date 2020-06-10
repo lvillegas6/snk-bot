@@ -23,9 +23,9 @@ client.on('ready', () => {
   });
 });
 
-client.on('message', msg => {
+client.on('message', (msg: any) => {
   if (msg.content.startsWith(prefix)) {
-    const cmd = msg.content.substring(1)
+    const cmd = msg.content.substring(1).split(' ')[0]
     for (const item of getCommands()) {
       if (item.getAliases().includes(cmd)) {
         item.call(client, msg)
