@@ -30,9 +30,6 @@ export default class Install extends command {
 
     msg.channel.send(initMsg).then(() => msg.channel.send(changePrefix).then((message: any) => {
       new DiscordReaction(message, ['✅', '❌'], [msg.author.id]).listen((collected: any) => { // fine
-        //collected.first().users.cache.each((user: any) => {
-        //  message.reply(user.tag + ", " + collected.first().emoji.name);
-        //});
         let reaction = collected.first();
         switch (reaction.emoji.name) {
           case '✅':
@@ -47,8 +44,6 @@ export default class Install extends command {
           default:
             break;
         }
-        //console.log("LAL " + collected.get(0).emoji.name);
-        //message.reply(reaction)
       }, () => { // error
         message.reply("NONE")
       });
