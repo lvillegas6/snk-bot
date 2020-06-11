@@ -6,16 +6,16 @@ import { setupJobs } from './jobs'
 
 import config from '../config.json'
 
-const client: Client = new Client()
-const prefix = '!'
-
+export let client: any; // Instancia del cliente
 export let database: SnkDatabase; // Base de datos
+
+client = new Client();
 
 client.on('ready', () => {
   console.log('Ready');
   database = new SnkDatabase(() => { // Se inicializa la base de datos
     console.log('Registering guilds...')
-    client.guilds.cache.forEach(guild => {
+    client.guilds.cache.forEach((guild: any) => {
       database.registerGuild(guild.id);
     });
     setupCommands(); // Solo inicializar comandos luego de que el bot está en ready y la db inicializó

@@ -3,7 +3,6 @@ import { Client, MessageEmbed } from 'discord.js';
 export default class BotDefaults {
 
   public killPlayer(player: any, user: any, guild: any, cause: string, channel: any) {
-    console.log(player)
     if (player.hasBody()) {
       this.sendDeathMessage(player, user, guild, cause, channel);
       player.kill();

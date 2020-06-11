@@ -143,12 +143,40 @@ export class SnkGuild {
     return this.prefix;
   }
 
+  public setGuildPrefix(prefix: string): void {
+    this.setAttribute('prefix', prefix);
+  }
+
   public getChannelid(): string {
     return this.channel;
   }
 
+  public setChannelId(channelId: string): void {
+    this.setAttribute('channel', channelId);
+  }
+
   public getGuildid(): string {
     return this.guildid;
+  }
+
+  public async setAttribute(attribute: string, value: any) {
+    await this.getLowdb().set(this.getGuildKey() + '.' + attribute, value).write();
+  }
+
+  public getAttribute(attribute: string): any {
+    return this.getLowdb().get(this.getGuildKey() + '.' + attribute).value();
+  }
+
+  public getGuildKey(): string {
+    return 'guilds.' + this.guildid;
+  }
+
+  public get(): SnkDatabase {
+    return this.database;
+  }
+
+  public getLowdb(): lowdb.LowdbAsync<any> {
+    return this.get().getLowdb();
   }
 
 }
