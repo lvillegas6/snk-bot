@@ -12,7 +12,9 @@ const playerOptions = Object({
   character: {},
   inventory: {},
   king: false,
+  place: 'none', // shiganshina, stohess, trost
   money: 0,
+  adult: false,
   age: 0,
   borndate: 0,
   deathdate: 0,
@@ -226,8 +228,17 @@ export class SnkPlayer {
     this.setEnergy(0);
     this.setHealth(0);
     this.setAttribute('character', null);
+    this.setAttribute('adult', false);
+    this.setAttribute('age', 1);
     this.setAttribute('body', false);
     this.setAttribute('deathdate', new Date().getTime() + 1000 * 1000);
+  }
+
+  public grow() {
+    this.setEnergy(12);
+    this.setHealth(6);
+    this.setAdult(true);
+    this.setAge(12);
   }
 
   public getDiscordUser(guild: SnkGuild) {
@@ -236,6 +247,14 @@ export class SnkPlayer {
 
   public getUserid() {
     return this.userid;
+  }
+
+  public isAdult() {
+    return this.getAttribute('adult');
+  }
+
+  public setAdult(value: boolean) {
+    this.setAttribute('adult', value);
   }
 
   public hasBody() {
@@ -292,6 +311,22 @@ export class SnkPlayer {
 
   public setHealth(health: number) {
     this.setAttribute('health', health);
+  }
+
+  public getAge(): number {
+    return this.getAttribute('age');
+  }
+
+  public addAge(age: number) {
+    this.setAge(this.getAge() + age);
+  }
+
+  public removeAge(age: number) {
+    this.setAge(this.getAge() - age);
+  }
+
+  public setAge(age: number) {
+    this.setAttribute('age', age);
   }
 
   public async setAttribute(attribute: string, value: any) {

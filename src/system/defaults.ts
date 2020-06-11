@@ -9,6 +9,28 @@ export default class BotDefaults {
     }
   }
 
+  public growPlayer(player: any, user: any, guild: any, channel: any) {
+    if (player.hasBody()) {
+      player.grow();
+      this.sendGrowMessage(player, user, guild, channel);
+    }
+  }
+
+  public sendGrowMessage(player: any, user: any, guild: any, channel: any) {
+    console.log(player.getAttribute('body'))
+    let embed = new MessageEmbed()
+      .setColor('#fc03f0')
+      .setAuthor(user.username, user.avatarURL())
+      .setTitle("🧠 ¡Has crecido!")
+      .setDescription([
+        `**${player.getCharacter()['name']}** (${user}), porfin eres un adolescente y tienes \`${player.getAge()}\` años, ya puedes acceder a nuevos comandos!`
+      ])
+      .setTimestamp()
+      .setFooter(`Puedes utilizar ${guild.getPrefix()}help para ver tus nuevos comandos disponibles`)
+      .setThumbnail('https://i.imgur.com/G1UVSvc.png')
+    channel.send(embed);
+  }
+
   public sendDeathMessage(player: any, user: any, guild: any, cause: string, channel: any) {
     console.log(player.getAttribute('body'))
     let embed = new MessageEmbed()
