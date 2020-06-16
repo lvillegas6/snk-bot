@@ -47,6 +47,7 @@ export default class Memories extends command {
         `**🔥 Respetos:** ${respects}`,
         `**❤ Salud:** ${health}`,
         `**⚡ Energia:** ${energy}`,
+        `**⌛ Edad:** ${age}`,
       ])
       .setThumbnail(character.image)
     msg.channel.send(embed)

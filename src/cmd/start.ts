@@ -1,5 +1,5 @@
 import { SnkNames } from '../util/snknames';
-import { SnkPlayer } from '../system/database';
+import { SnkPlayer, SnkGuild } from '../system/database';
 import { Client, MessageEmbed } from 'discord.js';
 
 import { database } from '../main';
@@ -17,6 +17,7 @@ export default class Start extends command {
       .setAuthor(msg.author.username, msg.author.avatarURL())
       .setTimestamp();
 
+    const guild: SnkGuild = database.getSoftGuild(msg.guild.id);
     const player: SnkPlayer = database.getSoftPlayer(msg.author.id, msg.guild.id); // Ve si existe el jugador, sino lo crea
 
     if (!player.hasBody()) { // Si el jugador no tiene un cuerpo se lo crea
@@ -32,10 +33,18 @@ export default class Start extends command {
       embed = new MessageEmbed() // Mensaje con el nuevo personaje
         .setAuthor(msg.author.username, msg.author.avatarURL())
         .setColor('#34eb64')
-        .setTitle('¡Has nacido!')
-        .setDescription('Tu nombre a partir de ahora será **' + character['name'] + '**.')
+        .setTitle('👶 Un sol reluciente nos acompaña, ¡Has nacido!')
+        .setDescription(
+          [
+            `Tu nombre a partir de ahora será **${character['name']}**, actualmente eres un bebé y deberás esperar 10 minutos para poder empezar a realizar acciones, ganar dinero, recuerdos y demás. Veamos quien eres esta vez:`,
+            '',
+            `💉 **Linaje:** ${character['name'].split(' ')[1]}`,
+            '⚡ **Linaje Especial:** No', // si es especial o real su sangre
+            '🧬 **ADN Titan:** No', // si reencarnó con titán
+            '🏠 **Nacimiento:** Trost' // lugar de nacimiento
+          ])
         .setThumbnail(character['image'])
-        .setFooter('Crecerás en 10 minutos', character['image']);
+        .setFooter(`Aún estas creciendo, puedes utilizar ${guild.getPrefix()}adoptenme para probar suerte!`, 'https://i.imgur.com/3iOov1I.png');
 
     } else {
 
