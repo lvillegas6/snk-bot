@@ -14,12 +14,8 @@ const playerOptions = Object({
   king: false,
   place: 'none', // shiganshina, stohess, trost
   money: 0,
-<<<<<<< HEAD
-  age: 1,
-=======
   adult: false,
-  age: 0,
->>>>>>> toxic
+  age: 1,
   borndate: 0,
   deathdate: 0,
   health: 0,

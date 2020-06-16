@@ -41,7 +41,8 @@ export default class Start extends command {
             `💉 **Linaje:** ${character['name'].split(' ')[1]}`,
             '⚡ **Linaje Especial:** No', // si es especial o real su sangre
             '🧬 **ADN Titan:** No', // si reencarnó con titán
-            '🏠 **Nacimiento:** Trost' // lugar de nacimiento
+            '🏠 **Nacimiento:** Trost', // lugar de nacimiento
+            '\n' + ((character['official']) ? '⭐ ¡Haz obtenido un **personaje oficial**!' : '')
           ])
         .setThumbnail(character['image'])
         .setFooter(`Aún estas creciendo, puedes utilizar ${guild.getPrefix()}adoptenme para probar suerte!`, 'https://i.imgur.com/3iOov1I.png');

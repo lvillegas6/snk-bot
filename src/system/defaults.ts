@@ -1,5 +1,7 @@
 import { Client, MessageEmbed } from 'discord.js';
 
+import DiscordReaction from '../util/reactioner';
+
 export default class BotDefaults {
 
   public killPlayer(player: any, user: any, guild: any, cause: string, channel: any) {
@@ -17,18 +19,74 @@ export default class BotDefaults {
   }
 
   public sendGrowMessage(player: any, user: any, guild: any, channel: any) {
-    console.log(player.getAttribute('body'))
     const embed = new MessageEmbed()
       .setColor('#fc03f0')
       .setAuthor(user.username, user.avatarURL())
       .setTitle('🧠 ¡Has crecido!')
       .setDescription([
-        `**${player.getCharacter()['name']}** (${user}), porfin eres un adolescente y tienes \`${player.getAge()}\` años, ya puedes acceder a nuevos comandos!`
+        `**${player.getCharacter()['name']}** (${user}), porfin eres un adolescente y tienes \`${player.getAge()}\` años, ya puedes acceder a nuevos comandos!`,
+        '',
+        '> Es importante que elijas quien serás en tu vida adulta, para ello utiliza: `!elegir`'
       ])
       .setTimestamp()
       .setFooter(`Puedes utilizar ${guild.getPrefix()}help para ver tus nuevos comandos disponibles`)
       .setThumbnail('https://i.imgur.com/G1UVSvc.png')
     channel.send(embed);
+  }
+
+  public sendLifeSelectionMessage(player: any, user: any, guild: any, channel: any) {
+
+    const embed = new MessageEmbed()
+      .setColor('#343deb')
+      .setAuthor(user.username, user.avatarURL())
+      .setTitle('🎯 ¡Elige tu futuro!')
+      .setDescription([
+        'Es hora de iniciar tu camino profesional, pero antes es importante conocer tus intereses, por favor selecciona una opción (no podrás cambiarla luego):',
+        '',
+        '🛡 - `Vida de Recluta`',
+        '👷‍♂️ - `Vida de Civil`'
+      ])
+      .setTimestamp()
+      .setFooter(`Debes elegir antes de tener 20 años o se te asignará automaticamente la vida de Civil.`)
+      .setThumbnail('https://i.imgur.com/G1UVSvc.png')
+
+    channel.send(embed).then((msg: any) => {
+      new DiscordReaction(msg, ['🛡', '👷‍♂️'], [user.id]).listen((collected: any) => { // fine
+        const reaction = collected.first();
+        switch (reaction.emoji.name) {
+          case '🛡':
+            channel.send(new MessageEmbed()
+              .setColor('#95f542')
+              .setAuthor(user.username, user.avatarURL())
+              .setTitle('🛡 ¡Haz elegido ser recluta!')
+              .setDescription([
+                'A partir de ahora deberás entrenar para poder conseguir ser un recluta de manera oficial y pertenecer a alguna tropa militar. Puedes utilizar el comando `!entrenar`.'
+              ])
+              .setTimestamp()
+              .setFooter(`Debes conseguir ser un recluta antes de los 25 años o de lo contrario serás removido/a del entrenamiento militar.`)
+              .setThumbnail('https://i.imgur.com/X3BCc4g.jpg'));
+            player.setAttribute('election', 'millitary');
+            break;
+          case '👷‍♂️':
+            channel.send(new MessageEmbed()
+              .setColor('#95f542')
+              .setAuthor(user.username, user.avatarURL())
+              .setTitle('👷‍♂️ ¡Haz elegido una vida normal!')
+              .setDescription([
+                'A partir de ahora deberás estudiar de manera constante hasta conseguir 100 puntos de estudio, una vez consigas dicha cantidad podrás elegir alguna de las `3` carreras disponibles para contribuir a la humanidad. Puedes utilizar el comando `!estudiar`.'
+              ])
+              .setTimestamp()
+              .setFooter(`Debes conseguir los 100 puntos de estudio antes de los 25 años o serás removido/a de tu escuela actual.`)
+              .setThumbnail('https://i.imgur.com/Ap1veFo.png'));
+            player.setAttribute('election', 'normal');
+            break;
+          default:
+            break;
+        }
+      }, () => { // error
+        console.log("ERROROROROOR")
+      });
+    });
   }
 
   public sendDeathMessage(player: any, user: any, guild: any, cause: string, channel: any) {
