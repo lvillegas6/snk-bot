@@ -12,8 +12,14 @@ const playerOptions = Object({
   character: {},
   inventory: {},
   king: false,
+  place: 'none', // shiganshina, stohess, trost
   money: 0,
+<<<<<<< HEAD
   age: 1,
+=======
+  adult: false,
+  age: 0,
+>>>>>>> toxic
   borndate: 0,
   deathdate: 0,
   health: 0,
@@ -143,12 +149,40 @@ export class SnkGuild {
     return this.prefix;
   }
 
+  public setGuildPrefix(prefix: string): void {
+    this.setAttribute('prefix', prefix);
+  }
+
   public getChannelid(): string {
     return this.channel;
   }
 
+  public setChannelId(channelId: string): void {
+    this.setAttribute('channel', channelId);
+  }
+
   public getGuildid(): string {
     return this.guildid;
+  }
+
+  public async setAttribute(attribute: string, value: any) {
+    await this.getLowdb().set(this.getGuildKey() + '.' + attribute, value).write();
+  }
+
+  public getAttribute(attribute: string): any {
+    return this.getLowdb().get(this.getGuildKey() + '.' + attribute).value();
+  }
+
+  public getGuildKey(): string {
+    return 'guilds.' + this.guildid;
+  }
+
+  public get(): SnkDatabase {
+    return this.database;
+  }
+
+  public getLowdb(): lowdb.LowdbAsync<any> {
+    return this.get().getLowdb();
   }
 
 }
@@ -198,8 +232,17 @@ export class SnkPlayer {
     this.setEnergy(0);
     this.setHealth(0);
     this.setAttribute('character', null);
+    this.setAttribute('adult', false);
+    this.setAttribute('age', 1);
     this.setAttribute('body', false);
     this.setAttribute('deathdate', new Date().getTime() + 1000 * 1000);
+  }
+
+  public grow() {
+    this.setEnergy(12);
+    this.setHealth(6);
+    this.setAdult(true);
+    this.setAge(12);
   }
 
   public getDiscordUser(guild: SnkGuild) {
@@ -208,6 +251,14 @@ export class SnkPlayer {
 
   public getUserid() {
     return this.userid;
+  }
+
+  public isAdult() {
+    return this.getAttribute('adult');
+  }
+
+  public setAdult(value: boolean) {
+    this.setAttribute('adult', value);
   }
 
   public hasBody() {
@@ -264,6 +315,22 @@ export class SnkPlayer {
 
   public setHealth(health: number) {
     this.setAttribute('health', health);
+  }
+
+  public getAge(): number {
+    return this.getAttribute('age');
+  }
+
+  public addAge(age: number) {
+    this.setAge(this.getAge() + age);
+  }
+
+  public removeAge(age: number) {
+    this.setAge(this.getAge() - age);
+  }
+
+  public setAge(age: number) {
+    this.setAttribute('age', age);
   }
 
   public async setAttribute(attribute: string, value: any) {
