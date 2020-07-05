@@ -1,37 +1,20 @@
-import { SnkPlayer } from '../system/database';
-import { SnkDefaults } from '../system/defaults';
-import { Client, MessageEmbed } from 'discord.js';
-
-import { database } from '../main';
-
 import command from '../commands';
+import { SnkPlayer } from '../system/database';
+import { Client, MessageEmbed } from 'discord.js';
+import { checkBody, checkAge } from '../system/middlewares';
 
 export default class Health extends command {
 
   constructor() {
-    super(['health'], '', false)
+    super(['health'], '', false, [checkBody, checkAge])
   }
-
-  call(client: Client, msg: any): void {
-
-    const player: SnkPlayer = database.getSoftPlayer(msg.author.id, msg.guild.id);
-
-    if (!player.hasBody()) {
-
-      SnkDefaults.sendNotSoulMessage(msg);
-      return;
-
-    }
-
+  command(client: Client, msg: any, player: SnkPlayer): void {
     const embed = new MessageEmbed()
       .setColor('#f75e2f')
       .setAuthor(msg.author.username, msg.author.avatarURL())
       .setTitle('Tu Salud')
       .setDescription(`Actualmente posees una salud de \`${player.getHealth()}\`.`)
       .setTimestamp();
-
     msg.channel.send(embed);
-
   }
-
 }

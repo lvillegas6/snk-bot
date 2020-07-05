@@ -5,17 +5,13 @@ import DiscordReaction from '../util/reactioner';
 export default class BotDefaults {
 
   public killPlayer(player: any, user: any, guild: any, cause: string, channel: any) {
-    if (player.hasBody()) {
-      this.sendDeathMessage(player, user, guild, cause, channel);
-      player.kill();
-    }
+    this.sendDeathMessage(player, user, guild, cause, channel);
+    player.kill();
   }
 
   public growPlayer(player: any, user: any, guild: any, channel: any) {
-    if (player.hasBody()) {
-      player.grow();
-      this.sendGrowMessage(player, user, guild, channel);
-    }
+    player.grow();
+    this.sendGrowMessage(player, user, guild, channel);
   }
 
   public sendGrowMessage(player: any, user: any, guild: any, channel: any) {
@@ -47,44 +43,44 @@ export default class BotDefaults {
         '👷‍♂️ - `Vida de Civil`'
       ])
       .setTimestamp()
-      .setFooter(`Debes elegir antes de tener 20 años o se te asignará automaticamente la vida de Civil.`)
+      .setFooter('Debes elegir antes de tener 20 años o se te asignará automaticamente la vida de Civil.')
       .setThumbnail('https://i.imgur.com/G1UVSvc.png')
 
     channel.send(embed).then((msg: any) => {
       new DiscordReaction(msg, ['🛡', '👷‍♂️'], [user.id]).listen((collected: any) => { // fine
         const reaction = collected.first();
         switch (reaction.emoji.name) {
-          case '🛡':
-            channel.send(new MessageEmbed()
-              .setColor('#95f542')
-              .setAuthor(user.username, user.avatarURL())
-              .setTitle('🛡 ¡Haz elegido ser recluta!')
-              .setDescription([
-                'A partir de ahora deberás entrenar para poder conseguir ser un recluta de manera oficial y pertenecer a alguna tropa militar. Puedes utilizar el comando `!entrenar`.'
-              ])
-              .setTimestamp()
-              .setFooter(`Debes conseguir ser un recluta antes de los 25 años o de lo contrario serás removido/a del entrenamiento militar.`)
-              .setThumbnail('https://i.imgur.com/X3BCc4g.jpg'));
-            player.setAttribute('election', 'millitary');
-            break;
-          case '👷‍♂️':
-            channel.send(new MessageEmbed()
-              .setColor('#95f542')
-              .setAuthor(user.username, user.avatarURL())
-              .setTitle('👷‍♂️ ¡Haz elegido una vida normal!')
-              .setDescription([
-                'A partir de ahora deberás estudiar de manera constante hasta conseguir 100 puntos de estudio, una vez consigas dicha cantidad podrás elegir alguna de las `3` carreras disponibles para contribuir a la humanidad. Puedes utilizar el comando `!estudiar`.'
-              ])
-              .setTimestamp()
-              .setFooter(`Debes conseguir los 100 puntos de estudio antes de los 25 años o serás removido/a de tu escuela actual.`)
-              .setThumbnail('https://i.imgur.com/Ap1veFo.png'));
-            player.setAttribute('election', 'normal');
-            break;
-          default:
-            break;
+        case '🛡':
+          channel.send(new MessageEmbed()
+            .setColor('#95f542')
+            .setAuthor(user.username, user.avatarURL())
+            .setTitle('🛡 ¡Haz elegido ser recluta!')
+            .setDescription([
+              'A partir de ahora deberás entrenar para poder conseguir ser un recluta de manera oficial y pertenecer a alguna tropa militar. Puedes utilizar el comando `!entrenar`.'
+            ])
+            .setTimestamp()
+            .setFooter('Debes conseguir ser un recluta antes de los 25 años o de lo contrario serás removido/a del entrenamiento militar.')
+            .setThumbnail('https://i.imgur.com/X3BCc4g.jpg'));
+          player.setAttribute('election', 'millitary');
+          break;
+        case '👷‍♂️':
+          channel.send(new MessageEmbed()
+            .setColor('#95f542')
+            .setAuthor(user.username, user.avatarURL())
+            .setTitle('👷‍♂️ ¡Haz elegido una vida normal!')
+            .setDescription([
+              'A partir de ahora deberás estudiar de manera constante hasta conseguir 100 puntos de estudio, una vez consigas dicha cantidad podrás elegir alguna de las `3` carreras disponibles para contribuir a la humanidad. Puedes utilizar el comando `!estudiar`.'
+            ])
+            .setTimestamp()
+            .setFooter('Debes conseguir los 100 puntos de estudio antes de los 25 años o serás removido/a de tu escuela actual.')
+            .setThumbnail('https://i.imgur.com/Ap1veFo.png'));
+          player.setAttribute('election', 'normal');
+          break;
+        default:
+          break;
         }
       }, () => { // error
-        console.log("ERROROROROOR")
+        console.log('ERROROROROOR')
       });
     });
   }
@@ -116,6 +112,13 @@ export default class BotDefaults {
         'Actualmente es un alma, debe reencarnar primero.' :
         'No puedes utilizar este comando porque actualmente eres un alma, debes reencarnar primero, para ello utiliza el comando `!start`.')
       .setTimestamp());
+  }
+
+  public sendHasSoulMessage(msg: any, mentions?: any) {
+    msg.channel.send(new MessageEmbed()
+      .setColor('#ed1f22')
+      .setTitle('¡Ya posees un personaje!')
+      .setDescription('Ya has reencarnado en un personaje, puedes utilizar `!profile` para ver a tu personaje actual.'));
   }
 
   public sendInsufficientMoneyMessage(msg: any, required: number, current: number) {

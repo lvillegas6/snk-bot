@@ -84,6 +84,16 @@ export class SnkDatabase {
 
   }
 
+  public getPlayer(msg: any) : SnkPlayer { // Registra al usuario si aun no juega, y retorna un objeto
+    return this.getSoftPlayer(msg.author.id, msg.guild.id);
+  }
+
+  public getMention(msg: any) : SnkPlayer | undefined { // Registra al usuario si aun no juega, y retorna un objeto
+    const mention = msg.mentions.users.first();
+    if (!mention) return undefined
+    return this.getSoftPlayer(mention.id, msg.guild.id);
+  }
+
   public getSoftPlayer(userid: string, guildid: string) { // Registra al usuario si aun no juega, y retorna un objeto
     this.registerPlayer(userid, guildid);
     return this.getPlayerManager(guildid).getPlayer(userid);

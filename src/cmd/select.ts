@@ -5,26 +5,15 @@ import { Client, MessageEmbed } from 'discord.js';
 import { database } from '../main';
 
 import command from '../commands';
+import { checkBody } from '../system/middlewares';
 
 export default class Select extends command {
 
   constructor() {
-    super(['select', 'elegir'], '', false)
+    super(['select', 'elegir'], '', false, [checkBody])
   }
 
-  call(client: Client, msg: any): void {
-
-    const player: SnkPlayer = database.getSoftPlayer(msg.author.id, msg.guild.id);
-
-    if (!player.hasBody()) {
-
-      SnkDefaults.sendNotSoulMessage(msg);
-      return;
-
-    }
-
+  command(client: Client, msg: any, player: SnkPlayer): void {
     SnkDefaults.sendLifeSelectionMessage(player, msg.author, database.getSoftGuild(msg.guild.id), msg.channel);
-
   }
-
 }
