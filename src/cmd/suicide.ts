@@ -11,7 +11,7 @@ export default class Suicide extends command {
     super(['suicide'], '', false)
   }
   setup() {
-    this.addMiddlewares([checkBody(), checkAge()])
+    this.addMiddlewares([checkBody, checkAge])
   }
   command(client: Client, msg: any, player: SnkPlayer): void {
     SnkDefaults.killPlayer(player, msg.author, database.getSoftGuild(msg.guild.id), 'Suicidio', msg.channel);

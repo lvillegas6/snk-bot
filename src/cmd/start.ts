@@ -12,7 +12,7 @@ export default class Start extends command {
   }
 
   setup() {
-    this.addMiddlewares([hasSould()])
+    this.addMiddlewares([hasSould])
   }
 
   command(client: Client, msg: any, player: SnkPlayer) {

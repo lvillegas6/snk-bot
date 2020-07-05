@@ -10,7 +10,7 @@ export default class Energy extends command {
   }
 
   setup() {
-    this.addMiddlewares([checkBody(), checkAge()])
+    this.addMiddlewares([checkBody, checkAge])
   }
 
   command(client: Client, msg: any, player: SnkPlayer): void {

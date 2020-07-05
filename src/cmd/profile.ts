@@ -11,7 +11,7 @@ export default class Memories extends command {
   }
 
   setup() {
-    this.addMiddlewares([checkBody(), checkAge()])
+    this.addMiddlewares([checkBody, checkAge])
   }
 
   command(client: Client, msg: any): void {

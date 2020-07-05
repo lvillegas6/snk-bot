@@ -9,7 +9,7 @@ export default class Health extends command {
     super(['health'], '', false)
   }
   setup() {
-    this.addMiddlewares([checkBody(), checkAge()])
+    this.addMiddlewares([checkBody, checkAge])
   }
   command(client: Client, msg: any, player: SnkPlayer): void {
     const embed = new MessageEmbed()
