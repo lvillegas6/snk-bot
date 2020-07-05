@@ -30,7 +30,12 @@ client.on('message', (msg: any) => {
     if ((cmd === 'install' || cmd === 'setchannel') || msg.channel.id === guild.getChannelid()) {
       for (const item of getCommands()) {
         if (item.getAliases().includes(cmd)) {
-          item.call(client, msg)
+
+          item.call(
+            client,
+            msg,
+            database.getPlayer(msg)
+          )
         }
       }
     }

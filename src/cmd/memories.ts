@@ -1,9 +1,7 @@
+import command from '../commands'
 import { Client, MessageEmbed } from 'discord.js';
 import { SnkPlayer } from '../system/database';
-
-import { database } from '../main';
-
-import command from '../commands'
+import { checkBody, checkAge } from '../system/middlewares';
 
 export default class Memories extends command {
 
@@ -11,10 +9,12 @@ export default class Memories extends command {
     super(['memories'], '', false)
   }
 
-  call(client: Client, msg: any): void {
+  setup() {
+    this.addMiddlewares([checkBody(), checkAge()])
+  }
+  command(client: Client, msg: any, player: SnkPlayer): void {
 
     let embed: MessageEmbed
-    const player: SnkPlayer = database.getSoftPlayer(msg.author.id, msg.guild.id);
 
     if (player.getAttribute('titanmemories') === -1) {
 

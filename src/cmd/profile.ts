@@ -1,8 +1,8 @@
+import command from '../commands'
 import { SnkPlayer } from '../system/database';
-import { SnkDefaults } from '../system/defaults';
 import { Client, MessageEmbed } from 'discord.js';
 import { database } from '../main';
-import command from '../commands'
+import { checkBody, checkAge } from '../system/middlewares';
 
 export default class Memories extends command {
 
@@ -10,30 +10,16 @@ export default class Memories extends command {
     super(['profile'], '', false)
   }
 
-  call(client: Client, msg: any): void {
+  setup() {
+    this.addMiddlewares([checkBody(), checkAge()])
+  }
+
+  command(client: Client, msg: any): void {
 
     const mention = msg.mentions.users.first();
     const player: SnkPlayer = database.getSoftPlayer(mention ? mention.id : msg.author.id, msg.guild.id);
-
-    if (!player.hasBody()) {
-
-      database.getPlayerManager(msg.guild.id).getPlayers()
-      SnkDefaults.sendNotSoulMessage(msg, mention)
-      return;
-
-    }
-
-    const age = player.getAttribute('age')
-
-    if (age < 12) {
-
-      SnkDefaults.sendInsufficientAge(msg, age, mention)
-      return
-
-    }
-
-    const [momey, memories, respects, health, energy, character] = player
-      .getAttributes(['money', 'memories', 'respects', 'health', 'energy', 'character'])
+    const [momey, memories, respects, health, energy, character, age] = player
+      .getAttributes(['money', 'memories', 'respects', 'health', 'energy', 'character', 'age'])
 
     const embed = new MessageEmbed()
       .setAuthor(msg.author.username, msg.author.avatarURL())

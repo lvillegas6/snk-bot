@@ -14,12 +14,7 @@ const playerOptions = Object({
   king: false,
   place: 'none', // shiganshina, stohess, trost
   money: 0,
-<<<<<<< HEAD
   age: 1,
-=======
-  adult: false,
-  age: 0,
->>>>>>> toxic
   borndate: 0,
   deathdate: 0,
   health: 0,
@@ -86,6 +81,16 @@ export class SnkDatabase {
 
     return new SnkGuild(guildid, prefix, channel, this);
 
+  }
+
+  public getPlayer(msg: any) : SnkPlayer { // Registra al usuario si aun no juega, y retorna un objeto
+    return this.getSoftPlayer(msg.author.id, msg.guild.id);
+  }
+
+  public getMention(msg: any) : SnkPlayer | undefined { // Registra al usuario si aun no juega, y retorna un objeto
+    const mention = msg.mentions.users.first();
+    if (!mention) return undefined
+    return this.getSoftPlayer(mention.id, msg.guild.id);
   }
 
   public getSoftPlayer(userid: string, guildid: string) { // Registra al usuario si aun no juega, y retorna un objeto

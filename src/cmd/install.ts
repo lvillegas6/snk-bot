@@ -1,11 +1,7 @@
-import { SnkPlayer } from '../system/database';
-import { SnkDefaults } from '../system/defaults';
-import { Client, MessageEmbed, MessageCollector, Guild } from 'discord.js';
-
-import { database } from '../main';
-
 import DiscordReaction from '../util/reactioner';
 import command from '../commands';
+import { Client, MessageEmbed, MessageCollector } from 'discord.js';
+import { database } from '../main';
 
 export default class Install extends command {
 
@@ -13,10 +9,9 @@ export default class Install extends command {
     super(['install'], '', false)
   }
 
-  call(client: Client, msg: any): void {
+  command(client: Client, msg: any): void {
 
     const guild = database.getSoftGuild(msg.guild.id);
-
     const initMsg = new MessageEmbed()
       .setColor('#00fff7')
       .setAuthor(msg.author.username, msg.author.avatarURL())

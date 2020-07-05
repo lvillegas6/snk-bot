@@ -3,17 +3,13 @@ import { Client, MessageEmbed } from 'discord.js';
 export default class BotDefaults {
 
   public killPlayer(player: any, user: any, guild: any, cause: string, channel: any) {
-    if (player.hasBody()) {
-      this.sendDeathMessage(player, user, guild, cause, channel);
-      player.kill();
-    }
+    this.sendDeathMessage(player, user, guild, cause, channel);
+    player.kill();
   }
 
   public growPlayer(player: any, user: any, guild: any, channel: any) {
-    if (player.hasBody()) {
-      player.grow();
-      this.sendGrowMessage(player, user, guild, channel);
-    }
+    player.grow();
+    this.sendGrowMessage(player, user, guild, channel);
   }
 
   public sendGrowMessage(player: any, user: any, guild: any, channel: any) {
@@ -58,6 +54,13 @@ export default class BotDefaults {
         'Actualmente es un alma, debe reencarnar primero.' :
         'No puedes utilizar este comando porque actualmente eres un alma, debes reencarnar primero, para ello utiliza el comando `!start`.')
       .setTimestamp());
+  }
+
+  public sendHasSoulMessage(msg: any, mentions?: any) {
+    msg.channel.send(new MessageEmbed()
+      .setColor('#ed1f22')
+      .setTitle('¡Ya posees un personaje!')
+      .setDescription('Ya has reencarnado en un personaje, puedes utilizar `!profile` para ver a tu personaje actual.'));
   }
 
   public sendInsufficientMoneyMessage(msg: any, required: number, current: number) {
