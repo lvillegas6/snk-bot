@@ -26,11 +26,17 @@ export default abstract class command {
     private admin: boolean;
     public call: (client: Client, msg: any, player: SnkPlayer) => void;
 
-    constructor(alias: string[], tooltip: string, admin: boolean) {
+    constructor(alias: string[], tooltip: string, admin: boolean, middlewares: Array<(middleware: any) => any> = []) {
       this.aliases = alias || [];
       this.tooltip = tooltip || '';
       this.admin = admin || false;
-      this.setup()
+
+      if (middlewares.length > 0) {
+        this.addMiddlewares(middlewares)
+      } else {
+        this.call = this.command
+      }
+
     }
 
     getAliases = () => this.aliases;
@@ -43,16 +49,12 @@ export default abstract class command {
       this.call = this.command
     }
 
-    addMiddlewares(middlewares: Array<(middleware: any) => any>) {
+    private addMiddlewares(middlewares: Array<(middleware: any) => any>) {
       this.call = this.middleware(this.command, middlewares)
     }
 
     private middleware(command: (client: Client, msg: any, player: SnkPlayer) => void,
       middlewares: Array<(middleware: any) => any>) : (client: Client, msg: any, player: SnkPlayer) => void{
-
-      if (middlewares.length < 1) {
-        return command
-      }
 
       for (let index = middlewares.length - 1; index >= 0; index--) {
         const middleware = middlewares[index]

@@ -8,11 +8,7 @@ import { hasSould } from '../system/middlewares';
 export default class Start extends command {
 
   constructor() {
-    super(['start'], '', false)
-  }
-
-  setup() {
-    this.addMiddlewares([hasSould])
+    super(['start'], '', false, [hasSould])
   }
 
   command(client: Client, msg: any, player: SnkPlayer) {

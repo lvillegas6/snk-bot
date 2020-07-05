@@ -6,11 +6,7 @@ import { Client, MessageEmbed } from 'discord.js';
 export default class Energy extends command {
 
   constructor() {
-    super(['energy'], '', false)
-  }
-
-  setup() {
-    this.addMiddlewares([checkBody, checkAge])
+    super(['energy'], '', false, [checkBody, checkAge])
   }
 
   command(client: Client, msg: any, player: SnkPlayer): void {

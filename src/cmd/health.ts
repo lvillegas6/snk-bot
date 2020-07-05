@@ -6,10 +6,7 @@ import { checkBody, checkAge } from '../system/middlewares';
 export default class Health extends command {
 
   constructor() {
-    super(['health'], '', false)
-  }
-  setup() {
-    this.addMiddlewares([checkBody, checkAge])
+    super(['health'], '', false, [checkBody, checkAge])
   }
   command(client: Client, msg: any, player: SnkPlayer): void {
     const embed = new MessageEmbed()

@@ -7,11 +7,7 @@ import { checkBody, checkAge } from '../system/middlewares';
 export default class Memories extends command {
 
   constructor() {
-    super(['profile'], '', false)
-  }
-
-  setup() {
-    this.addMiddlewares([checkBody, checkAge])
+    super(['profile'], '', false, [checkBody, checkAge])
   }
 
   command(client: Client, msg: any): void {
