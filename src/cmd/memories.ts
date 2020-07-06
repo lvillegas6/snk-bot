@@ -16,8 +16,10 @@ export default class Memories extends command {
       embed = new MessageEmbed()
         .setColor('#0099ff')
         .setAuthor(msg.author.username, msg.author.avatarURL())
-        .setDescription('A continuación se mostrará todos tus recuerdos: ')
-        .addField('📔 Recuerdos del Alma', player.getAttribute('memories'), true)
+        .setTitle('Tus recuerdos')
+        .setDescription(`Actualmente tienes \`${player.getMemories()}\` recuerdos.`)
+        .setTimestamp();
+
     } else {
       embed = new MessageEmbed()
         .setColor('#0099ff')

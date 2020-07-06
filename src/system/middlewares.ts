@@ -13,10 +13,11 @@ export const checkBody = Middleware(function (client: Client, msg: any, player: 
 })
 
 export const checkAge = Middleware(function (client: Client, msg: any, player: SnkPlayer, next: any) {
+  const maxAge = 12
   const age = player.getAttribute('age')
-  if (age < 12) {
+  if (age < maxAge) {
     const mention = msg.mentions.users.first();
-    SnkDefaults.sendInsufficientAge(msg, player.getAge(), mention)
+    SnkDefaults.sendInsufficientAge(msg, player.getAge(), maxAge, mention)
     return
   }
   next(client, msg, player)

@@ -323,6 +323,22 @@ export class SnkPlayer {
     this.setAttribute('health', health);
   }
 
+  public getMoney(): number {
+    return this.getAttribute('money');
+  }
+
+  public addMoney(money: number) {
+    this.setMoney(this.getMoney() + money);
+  }
+
+  public removeMoney(money: number) {
+    this.setMoney(this.getMoney() - money);
+  }
+
+  public setMoney(money: number) {
+    this.setAttribute('money', money);
+  }
+
   public getAge(): number {
     return this.getAttribute('age');
   }

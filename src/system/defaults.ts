@@ -132,12 +132,12 @@ export default class BotDefaults {
       .setTimestamp());
   }
 
-  public sendInsufficientAge(msg: any, age: number, mentions?: any) {
+  public sendInsufficientAge(msg: any, age: number, maxAge: number, mentions?: any) {
     msg.channel.send(new MessageEmbed()
       .setColor('#0099ff')
       .setAuthor(msg.author.username, msg.author.avatarURL())
       .setTitle(mentions ? `${mentions.username} aún es un bebé` : '¡Aún eres un bebé!')
-      .setDescription(`${mentions ? 'Tiene' : 'Tienes'} \`${age}\` año(s). ${mentions ? 'Debe' : 'Debes'} crecer hasta alcanzar la edad de los 12 años.`)
+      .setDescription(`${mentions ? 'Tiene' : 'Tienes'} \`${age}\` año(s). ${mentions ? 'Debe' : 'Debes'} crecer hasta alcanzar la edad de los ${maxAge} años.`)
       .setTimestamp());
   }
 
