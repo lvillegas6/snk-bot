@@ -11,7 +11,7 @@ export default class Energy extends command {
 
   command(client: Client, msg: any, player: SnkPlayer): void {
     const embed = new MessageEmbed()
-      .setColor('#19fa65')
+      .setColor('#19fa68')
       .setAuthor(msg.author.username, msg.author.avatarURL())
       .setTitle('Tu Energía')
       .setDescription(`Actualmente posees una energía de \`${player.getEnergy()}\`.`)
