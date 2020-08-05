@@ -4,7 +4,7 @@ import { SnkDatabase, SnkGuild } from './system/database'
 import { setupCommands, getCommands } from './commands'
 import { setupJobs } from './jobs'
 
-import config from '../config.json'
+import config from '../config.json'//--Obtengo token
 
 export const client: any = new Client();; // Instancia del cliente
 export let database: SnkDatabase; // Base de datos
@@ -13,7 +13,7 @@ client.on('ready', () => {
   console.log('Ready');
   database = new SnkDatabase(() => { // Se inicializa la base de datos
     console.log('Registering guilds...')
-    client.guilds.cache.forEach((guild: any) => {
+    client.guilds.cache.forEach((guild: any) => {     //recorro todas las propiedades del servidor
       database.registerGuild(guild.id);
     });
     setupCommands(); // Solo inicializar comandos luego de que el bot está en ready y la db inicializó
@@ -21,7 +21,7 @@ client.on('ready', () => {
   }, client);
 });
 
-client.on('message', (msg: any) => {
+client.on('message', (msg: any) => {//-- captura los mensajes en msg
 
   const guild = database.getSoftGuild(msg.guild.id);
 

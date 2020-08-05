@@ -96,5 +96,118 @@
     "genre": "female",
     "age": 17,
     "image": "https://i.imgur.com/MOBVntE.png"
+  },
+  {
+    "name": "Historia Reiss",
+    "required": 2500,
+    "genre": "female",
+    "age": 17,
+    "image": "https://i.imgur.com/QvRXJa9.png"
+  },
+  {
+    "name": "Ymir",
+    "required": 2500,
+    "genre": "female",
+    "age": 17,
+    "image": "https://i.imgur.com/T9QWetV.jpg"
+  },
+  {
+    "name": "Carla Jaeger",
+    "required": 2000,
+    "genre": "female",
+    "age": 32,
+    "image": "https://i.imgur.com/ZQEiwfd.png"
+  },
+  {
+    "name": "Dina Fritz",
+    "required": 2000,
+    "genre": "female",
+    "age": 32,
+    "image": "https://i.imgur.com/zAUATzH.png"
+  },
+  {
+    "name": "Eren Kruger",
+    "required": 2000,
+    "genre": "male",
+    "age": 45,
+    "image": "https://i.imgur.com/M5GuVm1.png"
+  },
+  {
+    "name": "Frieda Reiss",
+    "required": 2500,
+    "genre": "female",
+    "age": 18,
+    "image": "https://i.imgur.com/rZipG2N.png"
+  },
+  {
+    "name": "Kuchel Ackerman",
+    "required": 200,
+    "genre": "female",
+    "age": 30,
+    "image": "https://i.imgur.com/IWA4Pws.png"
+  },
+  {
+    "name": "Rod Reiss",
+    "required": 2500,
+    "genre": "male",
+    "age": 45,
+    "image": "https://i.imgur.com/YRmAXiG.png"
+  },
+  {
+    "name": "Zeke Jaeger",
+    "required": 2500,
+    "genre": "male",
+    "age": 25,
+    "image": "https://i.imgur.com/Fbe1adv.png"
+  },
+  {
+    "name": "Uri Reiss",
+    "required": 2500,
+    "genre": "male",
+    "age": 45,
+    "image": "https://i.imgur.com/OwYixHT.png"
+  },
+  {
+    "name": "Traute Caven",
+    "required": 200,
+    "genre": "female",
+    "age": 25,
+    "image": "https://i.imgur.com/ggJaKMc.png"
+  },
+  {
+    "name": "Annie Leonhart",
+    "required": 2500,
+    "genre": "female",
+    "age": 17,
+    "image": "https://i.imgur.com/AtgP94l.png"
+  },
+  {
+    "name": "Marco Bott",
+    "required": 2500,
+    "genre": "male",
+    "age": 17,
+    "image": "https://i.imgur.com/w4gcErl.png"
+  },
+  {
+    "name": "Dot Pixis",
+    "required": 2500,
+    "genre": "male",
+    "age": 55,
+    "image": "https://i.imgur.com/gcXGG6q.jpg"
+  },
+  {
+    "name": "Hannes",
+    "required": 2500,
+    "genre": "male",
+    "age": 32,
+    "image": "https://i.imgur.com/wWZFOJM.jpg"
+  },
+  {
+    "name": "Keith Shadis",
+    "required": 2500,
+    "genre": "male",
+    "age": 40,
+    "image": "https://i.imgur.com/BO5RhKj.png"
   }
+
 ]

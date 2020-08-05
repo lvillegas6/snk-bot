@@ -210,7 +210,7 @@ export class SnkPlayerManager {
     return array;
   }
 
-  public getPlayer(userid: string): SnkPlayer {
+  public getPlayer(userid: string): SnkPlayer { //recibe un objeto con todos los jugadores
     return new SnkPlayer(userid, this);
   }
 

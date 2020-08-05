@@ -1,4 +1,6 @@
 
+//-- readdir para obtener todos los archivos que hay dentro de una carpeta de forma asíncrona (no bloqueante) --
+    //-- Dentro de la carpeta cmd hay un archivo por cada comando que se puede utilizar en el juego --
 import { readdir } from 'fs'
 import { Client } from 'discord.js';
 import { SnkPlayer } from './system/database';
@@ -12,6 +14,7 @@ export function setupCommands() {
       console.error(err);
       return;
     }
+    //-- en files se guardan todos los archivos que se ecuentren en la carpeta cmd --
     files.forEach(element => {
       const command = require(__dirname + '/cmd/' + element).default;
       commands.push(new command())
